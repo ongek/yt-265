@@ -1,0 +1,19 @@
+name: Download and encode YouTube video
+
+on: [push]
+
+jobs:
+  download-encode-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install yt-dlp
+        run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
+      - name: Download YouTube video
+        run: yt-dlp -f 137 https://youtu.be/7lalH1U9KHY -o video.mp4
+      - name: Encode video with H.265
+        run: ffmpeg -i video.mp4 -c:v libx265 -preset placebo -b:v 4k -tag:v hvc1 encoded.mp4
+      - name: Upload video as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: encoded-video
+          path: encoded.mp4
