@@ -11,7 +11,7 @@ jobs:
       - name: Download YouTube video
         run: yt-dlp -f 137 https://youtu.be/7lalH1U9KHY -o video.mp4
       - name: Encode video with H.265
-        run: sudo apt update && sudo apt install ffmpeg && ffmpeg -i video.mp4 -c:v libx265 -preset placebo -b:v 4k -tag:v hvc1 encoded.mp4
+        run: sudo apt update && sudo apt install ffmpeg && ffmpeg -i video.mp4 -c:v libx265 -preset placebo -b:v 4k -tag:v hvc1 -crf 15 encoded.mp4
       - name: Upload video as artifact
         uses: actions/upload-artifact@v2
         with:
