@@ -9,7 +9,7 @@ jobs:
       - name: まずはaptをアップデート・必要なものを事前にインストール
         run: sudo apt update && sudo apt install ffmpeg build-essential
       - name: xHE-AACにするためのExhaleをビルド
-        run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.0.tar.gz && tar xvf exhale-v1.2.1.tar.gz && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin
+        run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz && tar xvf exhale-v1.2.1.tar.gz && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin
       - name: yt-dlpをインストール
         run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
       - name: YouTube動画(音声も)ダウンロード
