@@ -1,0 +1,10 @@
+name: Download and encode YouTube video with H.265 & xHE-AAC
+
+on: [push]
+
+jobs:
+  download-encode-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: まずはaptをアップデート・必要なものを事前にインストール
+        run: cat /proc/cpuinfo
