@@ -1,0 +1,11 @@
+name: macOSでtest
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download-encode-upload:
+    runs-on: macos-latest
+    steps:
+      - name: 最初にCPUをチェック
+        run: sudo powermetrics -n 1 | grep -A8 "SMC sensors"
