@@ -1,4 +1,4 @@
-name: Download and encode YouTube video with H.265 & xHE-AAC
+name: UbuntuでH.265/xHE-AACにする
 
 on:
   workflow_dispatch:
