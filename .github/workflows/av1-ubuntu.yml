@@ -57,7 +57,7 @@ jobs:
            --enable-nonfree && \
          make -j8 && \
          make install
-         sudo cp -v /runner/ffmpeg/bin/ffmpeg /usr/local/bin
+         sudo cp -v ~/ffmpeg/bin/ffmpeg /usr/local/bin
          ffmpeg
       - name: xHE-AACにするためのExhaleをビルド
         run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz && tar xvf exhale-v1.2.1.tar.gz && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin
