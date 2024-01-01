@@ -14,7 +14,7 @@ jobs:
       - name: 最初にCPUをチェック・作業ディレクトリ作成
         run: cat /proc/cpuinfo & mkdir ~/{.ffmpeg,.ffmpeg-build,.ffmpeg-src}
       - name: まずはaptをアップデート・必要なものを事前にインストール
-        run: sudo apt update && sudo apt install autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev libgnutls28-dev libtool libvorbis-dev meson ninja-build pkg-config texinfo wget yasm zlib1g-nasm libx264-dev libx265-dev libnuma-dev libvpx-dev libmp3lame-dev libopus-dev libaom-dev 
+        run: sudo apt update && sudo apt install autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev libgnutls28-dev libtool libvorbis-dev meson ninja-build pkg-config texinfo wget yasm zlib1g-dev nasm libx264-dev libx265-dev libnuma-dev libvpx-dev libmp3lame-dev libopus-dev libaom-dev 
       - name: SVT-AV1のビルド
         run: |
          cd ~/.ffmpeg-src && \
