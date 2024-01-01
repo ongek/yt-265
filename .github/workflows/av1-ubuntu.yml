@@ -1,4 +1,4 @@
-name: UbuntuでH.265/xHE-AACにする
+name: UbuntuでAV1/xHE-AACにする
 
 on:
   workflow_dispatch:
