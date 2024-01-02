@@ -11,6 +11,8 @@ jobs:
   download-encode-upload:
     runs-on: ubuntu-latest
     steps:
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1
       - name: 最初にCPUをチェック・作業ディレクトリ作成
         run: cat /proc/cpuinfo & mkdir ~/{.ffmpeg,.ffmpeg-build,.ffmpeg-src}
       - name: まずはaptをアップデート・必要なものを事前にインストール
