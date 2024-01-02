@@ -22,7 +22,7 @@ jobs:
       - name: YouTube動画(音声も)ダウンロード
         run: yt-dlp -f 137 ${{ github.event.inputs.video_url }} -o video.mp4 && yt-dlp -f 251 ${{ github.event.inputs.video_url }} -o audio.webm
       - name: webmの音声をwavにしてxHE-AAC(最低ビットレート)化
-        run: ffmpeg -i audio.webm audio.wav && exhale a audio.wav audio.m4a
+        run: ffmpeg -i audio.webm audio.wav && exhale a s audio.wav audio.m4a
       - name: Encode video with H.265
         run:  ffmpeg -i video.mp4 -i audio.m4a -c:v libx265 -preset placebo -b:v 330k -tag:v hvc1 -c:a copy encoded.mp4
       - name: Upload video as artifact
