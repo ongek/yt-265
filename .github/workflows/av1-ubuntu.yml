@@ -68,7 +68,7 @@ jobs:
       - name: webmの音声をwavにしてxHE-AAC(最低ビットレート)化
         run: ffmpeg -i audio.webm audio.wav && exhale a audio.wav audio.m4a
       - name: Encode video with H.265
-        run:  ffmpeg -i video.mp4 -i audio.m4a -c:v libsvtav1 -b:v 330k -c:a copy encoded.mp4
+        run:  ffmpeg -i video.mp4 -i audio.m4a -c:v libsvtav1 -preset 0 -b:v 330k -c:a copy encoded.mp4
       - name: Upload video as artifact
         uses: actions/upload-artifact@v2
         with:
