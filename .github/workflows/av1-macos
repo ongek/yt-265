@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: 最初にCPUをチェック
-        run: sysctl machdep.cpu.brand_string
+        run: sysctl machdep.cpu.brand_string && sysctl -n hw.logicalcpu_max
       - name: まずはaptをアップデート・必要なものを事前にインストール
         run: brew update && brew install ffmpeg
       - name: xHE-AACにするためのExhaleをビルド
