@@ -6,6 +6,12 @@ on:
       video_url:
         description: '動画のURLを入力'
         required: true
+      video_format:
+        description: '通常は251'
+        required: true
+      audio_format:
+        description: '通常は137'
+        required: true
 
 jobs:
   download-encode-upload:
