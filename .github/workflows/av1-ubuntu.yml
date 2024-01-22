@@ -71,7 +71,7 @@ jobs:
       - name: yt-dlpをインストール
         run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
       - name: YouTube動画(音声も)ダウンロード
-        run: yt-dlp -f 137 ${{ github.event.inputs.video_url }} -o video.mp4 && yt-dlp -f 251 ${{ github.event.inputs.video_url }} -o audio.webm
+        run: yt-dlp -f ${{ github.event.inputs.audio_format }} ${{ github.event.inputs.video_url }} -o video.mp4 && yt-dlp -f ${{ github.event.inputs.video_format }} ${{ github.event.inputs.video_url }} -o audio.webm
       - name: webmの音声をwavにしてxHE-AAC(最低ビットレート)化
         run: ffmpeg -i audio.webm audio.wav && exhale a audio.wav audio.m4a
       - name: Encode video with H.265
