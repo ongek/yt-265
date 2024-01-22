@@ -1,4 +1,4 @@
-name: UbuntuでAV1/xHE-AACにする(スクエア)
+name: □UbuntuでAV1/xHE-AACにする
 
 on:
   workflow_dispatch:
