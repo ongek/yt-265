@@ -1,4 +1,4 @@
-name: macOSでAV1/HE-AACv2にする
+name: 10分長をmacOSでAV1/HE-AACv2にする
 
 on:
   workflow_dispatch:
