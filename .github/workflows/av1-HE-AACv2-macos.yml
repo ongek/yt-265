@@ -56,7 +56,6 @@ jobs:
            --enable-libfdk-aac \
            --enable-libass \
            --enable-libfreetype \
-           --enable-libmp3lame \
            --enable-libopus \
            --enable-libsvtav1 \
            --enable-libvorbis \
