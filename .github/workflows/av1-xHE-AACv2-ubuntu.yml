@@ -72,7 +72,7 @@ jobs:
       - name: YouTube動画(音声も)ダウンロード
         run: yt-dlp -f ${{ github.event.inputs.video_format }} ${{ github.event.inputs.video_url }} -o video.mp4 && yt-dlp -f ${{ github.event.inputs.audio_format }} ${{ github.event.inputs.video_url }} -o audio.webm
       - name: Encode video with H.265
-        run:  ffmpeg -i video.mp4 -i audio.webm -c:v libsvtav1 -preset 0 -b:v 300k -c:a libfdk_aac -profile:a aac_he_v2 -b:a 18k encoded.mp4
+        run:  ffmpeg -i video.mp4 -i audio.webm -c:v libsvtav1 -preset 0 -b:v 250k -c:a libfdk_aac -profile:a aac_he_v2 -b:a 18k encoded.mp4
       - name: Upload video as artifact
         uses: actions/upload-artifact@v2
         with:
