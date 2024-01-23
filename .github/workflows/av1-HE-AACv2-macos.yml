@@ -10,7 +10,7 @@ on:
         description: '音声、通常は251'
         required: true
       video_format:
-        description: '動画、通常は137'
+        description: '動画、通常は137または247'
         required: true
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       - name: Collect Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1
       - name: 最初にCPUをチェック
-        run: sysctl machdep.cpu.brand_string && sysctl -n hw.logicalcpu_max & mkdir ~/{.ffmpeg,.ffmpeg-build,.ffmpeg-src}
+        run: sysctl machdep.cpu.brand_string & sysctl -n hw.logicalcpu_max & mkdir ~/{.ffmpeg,.ffmpeg-build,.ffmpeg-src}
       - name: まずはaptをアップデート・必要なものを事前にインストール
         run: brew update && brew install automake fdk-aac git libass libtool libvorbis libvpx \opus sdl shtool texi2html theora x264 xvid nasm
       - name: SVT-AV1のビルド
@@ -64,14 +64,12 @@ jobs:
            --enable-nonfree && \
          make -j8 && \
          make install
-      - name: ffmpegのパス通す
-        run: sudo cp -v ~/.ffmpeg/bin/ffmpeg /usr/local/bin
-      - name: yt-dlpをインストール
-        run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
+      - name: ffmpegのパス通す・yt-dlpをインストール
+        run: sudo cp -v ~/.ffmpeg/bin/ffmpeg /usr/local/bin & sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
       - name: YouTube動画(音声も)ダウンロード
         run: yt-dlp -f ${{ github.event.inputs.video_format }} ${{ github.event.inputs.video_url }} -o video.mp4 & yt-dlp -f ${{ github.event.inputs.audio_format }} ${{ github.event.inputs.video_url }} -o audio.webm
-      - name: Encode video with H.265
-        run:  ffmpeg -i video.mp4 -i audio.webm -c:v libx265 -preset placebo -b:v 330k -tag:v hvc1 -c:a copy encoded.mp4
+      - name: Encode video with AV1
+        run:  ffmpeg -i video.mp4 -i audio.webm -c:v libsvtav1 -preset 0 -b:v 250k -c:a libfdk_aac -profile:a aac_he_v2 -b:a 18k encoded.mp4
       - name: Upload video as artifact
         uses: actions/upload-artifact@v2
         with:
