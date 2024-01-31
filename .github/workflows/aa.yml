@@ -24,7 +24,7 @@ jobs:
            --disable-doc \
            --enable-cross-compile \
            --target-os=darwin　\
-           --cross-prefix=aarch64-darwin \
+           --cross-prefix=aarch64-apple-darwin \
            --enable-static \
            --arch=arm64 \
            --pkg-config-flags="--static" \
