@@ -1,0 +1,48 @@
+name: macOSでBuild
+
+on: push
+
+jobs:
+  download-encode-upload:
+    runs-on: macos-13
+    steps:
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1
+      - name: 最初にCPUをチェック
+        run: sysctl machdep.cpu.brand_string & sysctl -n hw.logicalcpu_max & mkdir ~/{.ffmpeg,.ffmpeg-build,.ffmpeg-src}
+      - name: まずはaptをアップデート・必要なものを事前にインストール
+        run: brew update && brew install automake fdk-aac git libass libtool libvorbis libvpx \opus sdl shtool texi2html theora x264 xvid nasm lame x265
+      - name: ffmpegのビルド
+        run: |
+         cd ~/.ffmpeg-src && \
+         wget https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 && \
+         tar xf ffmpeg-snapshot.tar.bz2 && \
+         cd ffmpeg && \
+           PKG_CONFIG_PATH="$HOME/.ffmpeg-build/lib/pkgconfig" ./configure \
+           --prefix="$HOME/.ffmpeg-build" \
+           --pkg-config-flags="--static" \
+           --extra-cflags="-I$HOME/.ffmpeg-build/include" \
+           --extra-ldflags="-L$HOME/.ffmpeg-build/lib" \
+           --extra-libs="-lpthread -lm" \
+           --ld="g++" \
+           --bindir="$HOME/.ffmpeg/bin" \
+           --disable-ffplay \
+           --enable-gpl \
+           --enable-openssl \
+           --enable-libass \
+           --enable-libfdk-aac \
+           --enable-libfreetype \
+           --enable-libmp3lame \
+           --enable-libopus \
+           --enable-libvorbis \
+           --enable-libvpx \
+           --enable-libx264 \
+           --enable-libx265 \
+           --enable-nonfree && \
+         make -j8 && \
+         make install -target arm64-apple-macos11
+      - name: Upload video as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ffmpeg
+          path: ffmpeg
