@@ -23,7 +23,7 @@ jobs:
            --enable-shared \
            --disable-doc \
            --enable-cross-compile \
-           --enable-static
+           --enable-static \
            --arch=arm64 \
            --pkg-config-flags="--static" \
            --extra-cflags="-I$HOME/.ffmpeg-build/include" \
