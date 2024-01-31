@@ -23,7 +23,7 @@ jobs:
            --enable-shared \
            --disable-doc \
            --enable-cross-compile \
-           --target-os=darwin
+           --target-os=darwin　\
            --cross-prefix=aarch64-darwin \
            --enable-static \
            --arch=arm64 \
