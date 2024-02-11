@@ -24,6 +24,7 @@ jobs:
            --disable-doc \
            --enable-static \
            --arch=arm64 \
+           --cpu=armv8-a \
            --pkg-config-flags="--static" \
            --extra-cflags="-I$HOME/.ffmpeg-build/include" \
            --extra-ldflags="-L$HOME/.ffmpeg-build/lib" \
@@ -44,7 +45,6 @@ jobs:
            --enable-libx264 \
            --enable-libx265 \
            --enable-cross-compile \
-           --cc='clang -arch arm64' \
            --enable-nonfree && \
          make -j8 && \
          make install
