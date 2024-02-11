@@ -31,6 +31,7 @@ jobs:
            --ld="g++" \
            --bindir="$HOME/.ffmpeg/bin" \
            --disable-ffplay \
+           --enable-neon \
            --enable-gpl \
            --enable-openssl \
            --enable-libass \
