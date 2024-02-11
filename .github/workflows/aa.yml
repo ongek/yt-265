@@ -43,7 +43,7 @@ jobs:
            --enable-libvpx \
            --enable-libx264 \
            --enable-libx265 \
-           --enable-crosscompile
+           --enable-cross-compile
            --cc='clang -arch arm64'
            --enable-nonfree && \
          make -j8 && \
