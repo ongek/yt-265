@@ -1,0 +1,32 @@
+name: macOSでxHE-AACにするだけ
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: '動画のURLを入力'
+        required: true
+
+jobs:
+  download-encode-upload:
+    runs-on: macos-latest
+    steps:
+      - name: 最初にCPUをチェック
+        run: sysctl machdep.cpu.brand_string && sysctl -n hw.logicalcpu_max
+      - name: まずはaptをアップデート・必要なものを事前にインストール
+        run: brew update && brew install ffmpeg
+      - name: xHE-AACにするためのExhaleをビルド
+        run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz && tar xvf exhale-v1.2.1.tar.gz && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin
+      - name: yt-dlpをインストール
+        run: sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
+      - name: YouTube動画(音声も)ダウンロード
+        run: yt-dlp -f 137 ${{ github.event.inputs.video_url }} -o video.mp4 && yt-dlp -f 251 ${{ github.event.inputs.video_url }} -o audio.webm
+      - name: webmの音声をwavにしてxHE-AAC(最低ビットレート)化
+        run: ffmpeg -i audio.webm audio.wav && exhale a audio.wav audio.m4a
+      - name: Encode video with H.265
+        run:  ffmpeg -i video.mp4 -i audio.m4a -c:v libx265 -preset placebo -b:v 330k -tag:v hvc1 -c:a copy encoded.mp4
+      - name: Upload video as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: encoded-video
+          path: encoded.mp4
