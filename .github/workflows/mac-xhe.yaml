@@ -16,7 +16,7 @@ jobs:
       - name: 最初にCPUをチェック
         run: sysctl machdep.cpu.brand_string & sysctl -n hw.logicalcpu_max
       - name: 諸々をダウンロード
-        run: brew install ffmpeg & wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz & curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+        run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz & curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && brew install ffmpeg
       - name: ビルド等
         run: chmod a+rx /usr/local/bin/yt-dlp & tar xvf exhale-v1.2.1.tar.gz && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin
       - name: YouTube音声ダウンロード
