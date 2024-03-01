@@ -9,14 +9,14 @@ on:
 
 jobs:
   download-encode-upload:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Collect Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1
       - name: 最初にCPUをチェック
         run: sysctl machdep.cpu.brand_string & sysctl -n hw.logicalcpu_max
       - name: xHE-AACにするためのExhaleをビルド
-        run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz && tar xvf exhale-v1.2.1.tar.gz & curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin & chmod a+rx /usr/local/bin/yt-dlp
+        run: wget https://gitlab.com/ecodis/exhale/-/archive/v1.2.1/exhale-v1.2.1.tar.gz & curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && tar xvf exhale-v1.2.1.tar.gz && cd exhale-v1.2.1 && make BUILD32=0 release && sudo cp -v bin/exhale /usr/local/bin & chmod a+rx /usr/local/bin/yt-dlp
       - name: YouTube音声ダウンロード
         run: yt-dlp -f 251 ${{ github.event.inputs.video_url }} -o audio.webm
       - name: webmの音声をwavにしてxHE-AAC(最低ビットレート)化
